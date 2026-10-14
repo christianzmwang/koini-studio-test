@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /room-copy/
+
+Sitemap: https://koinistudio.com/sitemap.xml

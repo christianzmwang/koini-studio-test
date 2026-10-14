@@ -1,0 +1,83 @@
+[
+  {
+    "id": "bohus-313245",
+    "name": "Moss sovestol",
+    "source": "https://koini-api.onrender.com/catalogue/library/bohus-313245.usdz?v=1791673724",
+    "productURL": "https://www.bohus.no/sofa/sovesofa/moss-sovestol",
+    "modelSHA256": "34b2b573fc729a532e04b86376e3970c670c1ad95ed35bebe2ba65c02f356c71",
+    "modelBytes": 18906449,
+    "modelOrientation": {
+      "basis": "operator",
+      "export_revision": 4,
+      "front": "+Z",
+      "meters_per_unit": 1,
+      "reviewed": true,
+      "source_front": "+Z",
+      "source_up": "+Y",
+      "stage_meters_per_unit": 0.3048,
+      "stage_up": "Y",
+      "up": "+Y",
+      "version": 1
+    },
+    "renderer": "Koini RealityKit previewScene, original model materials",
+    "date": "2026-10-14",
+    "views": [
+      "front",
+      "side"
+    ]
+  },
+  {
+    "id": "bohus-333211",
+    "name": "Cloud 3 seter sofa XXL",
+    "source": "https://koini-api.onrender.com/catalogue/library/bohus-333211.usdz?v=1791951171",
+    "productURL": "https://www.bohus.no/sofa/3-seter/cloud-3-seter-sofa-xxl",
+    "modelSHA256": "aa47d0433632d735993333db77a3d6b9dece88b611e459bbec20e0985f5497b6",
+    "modelBytes": 6759470,
+    "modelOrientation": {
+      "basis": "tripo-export",
+      "export_revision": 4,
+      "front": "+Z",
+      "meters_per_unit": 1,
+      "reviewed": true,
+      "source_front": "+X",
+      "source_up": "+Y",
+      "stage_meters_per_unit": 1.0,
+      "stage_up": "Z",
+      "up": "+Y",
+      "version": 1
+    },
+    "renderer": "Koini RealityKit previewScene, original model materials",
+    "date": "2026-10-14",
+    "views": [
+      "front",
+      "side"
+    ]
+  },
+  {
+    "id": "bohus-325522",
+    "name": "Storfjord hj\u00f8rnesofa (soft rygg oppsett d, 246 cm)",
+    "source": "https://koini-api.onrender.com/catalogue/library/bohus-325522.usdz?v=1791502612",
+    "productURL": "https://www.bohus.no/sofa/hjornesofa/storfjord-hjornesofa-8",
+    "modelSHA256": "72ceea175151079710ce9bf1c279ad04465628b1975962db3731e74f1108023e",
+    "modelBytes": 19380705,
+    "modelOrientation": {
+      "basis": "operator",
+      "export_revision": 4,
+      "front": "+Z",
+      "meters_per_unit": 1,
+      "reviewed": true,
+      "source_front": "+Z",
+      "source_up": "+Y",
+      "stage_meters_per_unit": 0.3048,
+      "stage_up": "Y",
+      "up": "+Y",
+      "version": 1
+    },
+    "renderer": "Koini RealityKit previewScene, original model materials",
+    "date": "2026-10-14",
+    "views": [
+      "front",
+      "side"
+    ]
+  }
+]

@@ -17,7 +17,7 @@ test('only the room landing page is forwarded, with no snapshot write API or adm
   const room = config.rewrites.find(route => route.source.startsWith('/room-copy/'));
   assert.ok(room);
   assert.equal(room.source, '/room-copy/:token([0-9a-f]{32})');
-  assert.equal(room.destination, 'https://koini-api.onrender.com/room-copy/:token');
+  assert.equal(room.destination, '/api/room-copy?token=:token');
   assert.ok(config.rewrites.every(route => !route.source.includes('admin') && !route.source.includes('room-copies')));
   assert.ok(config.headers.some(route => route.source === '/room-copy/:path*' && route.headers.some(header => header.key === 'Cache-Control' && header.value === 'no-store')));
 });

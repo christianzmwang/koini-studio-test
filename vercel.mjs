@@ -6,7 +6,7 @@ export const config = {
   framework: null,
   cleanUrls: true,
   rewrites: [
-    routes.rewrite('/room-copy/:token([0-9a-f]{32})', 'https://koini-api.onrender.com/room-copy/:token'),
+    routes.rewrite('/room-copy/:token([0-9a-f]{32})', '/api/room-copy?token=:token'),
     routes.rewrite('/privacy', 'https://koini-api.onrender.com/privacy'),
     routes.rewrite('/support', 'https://koini-api.onrender.com/support'),
   ],
@@ -17,5 +17,9 @@ export const config = {
       { key: 'X-Frame-Options', value: 'DENY' },
     ] },
     { source: '/room-copy/:path*', headers: [{ key: 'Cache-Control', value: 'no-store' }] },
+    { source: '/.well-known/apple-app-site-association', headers: [
+      { key: 'Content-Type', value: 'application/json' },
+      { key: 'Cache-Control', value: 'public, max-age=3600' },
+    ] },
   ],
 };

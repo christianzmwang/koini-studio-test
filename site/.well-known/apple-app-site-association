@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["9X55B435P8.com.christianwang.koini"],
+        "components": [{ "/": "/room-copy/*" }]
+      }
+    ]
+  }
+}

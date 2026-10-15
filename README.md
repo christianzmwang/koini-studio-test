@@ -29,10 +29,12 @@ when the camera, finish, viewport or visibility changes.
 `site/rendering.js` ports Koini's procedural HDR environment and floor bounce,
 uses the original colour, normal, roughness and occlusion maps with metre-based
 UV repeats, and keeps data maps in linear space. The viewer adds two soft shadow
-lights, GTAO contact occlusion, multisample antialiasing, and one final tone-mapping
-and sRGB output pass. The room's 43-degree camera and initial pose match the
+lights, stable contact-shadow geometry, multisample antialiasing, and a final
+output pass using a measured RealityKit HDR colour-response atlas. The room's 43-degree camera and initial pose match the
 RealityKit preview. Supplemental texture provenance is recorded in
-`docs/surface-provenance.json`.
+`docs/surface-provenance.json`. Native texture origins, 3 cm wall thickness,
+8.5 cm baseboards and noncasting walls match the app. Calibration evidence and
+limits are recorded in `docs/render-calibration.json`.
 
 The furniture gallery uses the published Moss, Cloud and Storfjord models from
 Koini Lab3D, converted to self-contained GLB files with original materials and
@@ -88,3 +90,38 @@ are listed in `index.json`. Exported data stays private; selecting a room for th
 public homepage is a separate source change. Container access was verified with the connected TestFlight iPhone: all 12 rooms
 and their 10 referenced model files exported successfully. Keep the phone unlocked
 and Koini open during future exports. Apple may restrict access on other devices.
+
+## Matching the native renderer
+
+`pnpm calibrate .local/render-reference` starts a local comparison workbench at
+http://127.0.0.1:55874/__calibration. It compares the same 1400 × 1080 camera
+against colour-managed sRGB native PNGs: `room-herringbone.png`, `room-oak.png`,
+and `room-lightOak.png`. Other angles use `room-<finish>-<view>.png`, with views
+`front`, `left`, `right` and `top`. Without a reference directory it uses the
+published native posters for the initial angle. Captures and numeric reports
+stay in Git-ignored `.local/render-calibration/`; the workbench and references
+are not production routes or bundled assets.
+
+The browser's small, lossless `assets/rendering/realitykit-tone.png` is a
+33 × 33 × 33 colour lookup atlas sampled from synthetic linear HDR colours
+through RealityKit on the iOS 26.1 simulator. Its logarithmic input range is
+0–15.9375. It approximates the native renderer's colour response; it does not
+replace the materials, lighting or actual interactive geometry. Atlas sampling
+happens in linear space, before the final sRGB conversion. Transparent edges
+are unpremultiplied before tone mapping and premultiplied afterward.
+
+To regenerate the atlas with Xcode and a booted iOS simulator:
+
+```sh
+xcrun -sdk iphonesimulator swiftc -O -target arm64-apple-ios26.0-simulator \
+  -o /tmp/koini-native-tone scripts/export-native-tone.swift
+xcrun simctl spawn YOUR_SIMULATOR_UDID /tmp/koini-native-tone /tmp/koini-native-tone-p3.png
+magick /tmp/koini-native-tone-p3.png \
+  -profile '/System/Library/ColorSync/Profiles/sRGB Profile.icc' \
+  -filter point -resize 50% -depth 8 -strip \
+  site/public/assets/rendering/realitykit-tone.png
+```
+
+Different native renderer versions, display gamuts, material conversions and
+shadow implementations can still differ. The comparison uses native
+RealityKit reference renders, rather than a measured physical iPhone display.

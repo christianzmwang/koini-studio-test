@@ -1,0 +1,257 @@
+{
+  "date": "2026-10-15",
+  "referenceRenderer": "Koini RealityKit RealityRenderer, iOS 26.1 simulator, native Display P3 output converted to sRGB using ColorSync ICC profile",
+  "browserRenderer": "Three.js 0.186.1, linear HDR intermediate, measured tone atlas, sRGB output",
+  "atlas": {
+    "asset": "/assets/rendering/realitykit-tone.png",
+    "generator": "scripts/export-native-tone.swift",
+    "size": 33,
+    "dimensions": [
+      1089,
+      33
+    ],
+    "layout": "Red varies across each 33-pixel tile, green down rows, blue across 33 tiles. Image row zero is green zero.",
+    "input": "Linear sRGB; p = log2(1 + 16 * max(rgb, 0)) / 8; clamp p to [0,1]",
+    "maxLinearInput": 15.9375,
+    "encoding": "Lossless 8-bit sRGB PNG; GPU decodes texels to linear values before interpolation",
+    "sha256": "273b4201dc979122cb38d92e10e8a5ec1f68abdde93a11a47b515190468842c6",
+    "bytes": 15200
+  },
+  "lighting": {
+    "key": 5,
+    "fill": 2.33,
+    "environment": 0.08,
+    "floorBounce": 0.08,
+    "sourceAzimuths": [
+      36,
+      216
+    ],
+    "sourceElevation": 60
+  },
+  "camera": {
+    "dimensions": [
+      1400,
+      1080
+    ],
+    "fieldOfView": 43,
+    "eye": [
+      3.8,
+      4.6,
+      5.3
+    ],
+    "target": [
+      0,
+      0.7,
+      0
+    ]
+  },
+  "regions": {
+    "leftWall": [
+      310,
+      315,
+      100,
+      100
+    ],
+    "backWall": [
+      800,
+      260,
+      140,
+      100
+    ],
+    "sofa": [
+      620,
+      470,
+      100,
+      60
+    ],
+    "chair": [
+      945,
+      635,
+      55,
+      65
+    ],
+    "table": [
+      505,
+      593,
+      65,
+      30
+    ],
+    "floor": [
+      635,
+      795,
+      130,
+      60
+    ]
+  },
+  "limits": "Comparison uses native simulator renders of the selected room. This is not a pixel-identical renderer or physical iPhone display measurement. The six initial-view surface probes do not measure the whole image, arbitrary rooms or every viewing angle. Converted furniture shading and the two engines\u2019 shadows can still differ.",
+  "initialViewComparison": {
+    "baselineCommit": "ed99852",
+    "metric": "Mean absolute 8-bit sRGB channel difference, averaged equally over six named surface regions; only opaque overlapping pixels. Not a percentage of visual identity.",
+    "baselineMeanError": 25.63,
+    "calibratedMeanError": 3.98,
+    "regions": {
+      "leftWall": {
+        "native": [
+          142.4,
+          96.5,
+          71.7
+        ],
+        "browser": [
+          144.5,
+          102.5,
+          76.2
+        ],
+        "meanAbsoluteError": 4.47
+      },
+      "backWall": {
+        "native": [
+          158,
+          109.3,
+          82.7
+        ],
+        "browser": [
+          154.2,
+          109.4,
+          81.1
+        ],
+        "meanAbsoluteError": 2.39
+      },
+      "sofa": {
+        "native": [
+          76.5,
+          30.6,
+          19.6
+        ],
+        "browser": [
+          79.2,
+          32,
+          18.2
+        ],
+        "meanAbsoluteError": 2.43
+      },
+      "chair": {
+        "native": [
+          218.3,
+          201.1,
+          170.8
+        ],
+        "browser": [
+          214.4,
+          198.3,
+          168.3
+        ],
+        "meanAbsoluteError": 6.4
+      },
+      "table": {
+        "native": [
+          237.5,
+          231.3,
+          219.9
+        ],
+        "browser": [
+          239.7,
+          232.6,
+          218.6
+        ],
+        "meanAbsoluteError": 2.42
+      },
+      "floor": {
+        "native": [
+          178.3,
+          140.5,
+          103.4
+        ],
+        "browser": [
+          184.7,
+          147.3,
+          106.8
+        ],
+        "meanAbsoluteError": 5.76
+      }
+    }
+  },
+  "viewChecks": [
+    {
+      "floor": "herringbone",
+      "view": "front",
+      "opaqueOverlapMAE": 5.61
+    },
+    {
+      "floor": "herringbone",
+      "view": "iso",
+      "opaqueOverlapMAE": 4.42
+    },
+    {
+      "floor": "herringbone",
+      "view": "left",
+      "opaqueOverlapMAE": 7.43
+    },
+    {
+      "floor": "herringbone",
+      "view": "right",
+      "opaqueOverlapMAE": 8.1
+    },
+    {
+      "floor": "herringbone",
+      "view": "top",
+      "opaqueOverlapMAE": 10.72
+    },
+    {
+      "floor": "lightOak",
+      "view": "front",
+      "opaqueOverlapMAE": 5.56
+    },
+    {
+      "floor": "lightOak",
+      "view": "iso",
+      "opaqueOverlapMAE": 4.76
+    },
+    {
+      "floor": "lightOak",
+      "view": "left",
+      "opaqueOverlapMAE": 7.5
+    },
+    {
+      "floor": "lightOak",
+      "view": "right",
+      "opaqueOverlapMAE": 8.18
+    },
+    {
+      "floor": "lightOak",
+      "view": "top",
+      "opaqueOverlapMAE": 10.93
+    },
+    {
+      "floor": "oak",
+      "view": "front",
+      "opaqueOverlapMAE": 5.79
+    },
+    {
+      "floor": "oak",
+      "view": "iso",
+      "opaqueOverlapMAE": 5.29
+    },
+    {
+      "floor": "oak",
+      "view": "left",
+      "opaqueOverlapMAE": 7.78
+    },
+    {
+      "floor": "oak",
+      "view": "right",
+      "opaqueOverlapMAE": 8.86
+    },
+    {
+      "floor": "oak",
+      "view": "top",
+      "opaqueOverlapMAE": 11.68
+    }
+  ],
+  "viewMetric": "Whole-image mean absolute 8-bit sRGB channel difference over pixels opaque in both images. Background and transparent silhouette edges excluded; furniture, walls, floor and shadow differences included.",
+  "independentToneCheck": {
+    "neutralSamples": 121,
+    "meanError8Bit": 1.77,
+    "maxError8Bit": 5.88,
+    "description": "Independent native grayscale ramp compared against trilinear atlas interpolation, distinct from the atlas lattice; approximate output response, not exact native shaders."
+  }
+}

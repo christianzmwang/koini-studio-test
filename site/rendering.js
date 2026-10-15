@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
+// Calibrated against colour-managed RealityKit frames, with the same room and camera.
+export const nativeLook = Object.freeze({ key: 5, fill: 2.33, environment: 0.08, bounce: 0.08 });
+
 /** Metre scales and linear material channels from Koini's TextureSets manifest. */
 export const surfaceSets = {
   oak: { directory: 'floors', tile: 1.7, mean: '#816042' },
@@ -13,6 +16,8 @@ export function configureSurfaceTexture(texture, channel, width, height, tile) {
   texture.colorSpace = channel === 'color' ? THREE.SRGBColorSpace : THREE.NoColorSpace;
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   texture.repeat.set(width / tile, height / tile);
+  // RealityKit repeats from the image's top edge; Three's UV origin is bottom-left.
+  texture.offset.y = 1 - texture.repeat.y;
   texture.anisotropy = 8;
   return texture;
 }
@@ -89,9 +94,9 @@ export function createLighting(renderer, scene) {
     return targets.get(key).texture;
   };
   scene.environment = environment();
-  scene.environmentIntensity = 0.45;
+  scene.environmentIntensity = nativeLook.environment;
   const lights = [36, 216].map((azimuth, index) => {
-    const light = new THREE.DirectionalLight('#fff7eb', index ? 0.7 : 1.5);
+    const light = new THREE.DirectionalLight('#fff7eb', index ? nativeLook.fill : nativeLook.key);
     const az = THREE.MathUtils.degToRad(azimuth), elevation = Math.PI / 3;
     light.position.set(Math.sin(az) * Math.cos(elevation) * 10, Math.sin(elevation) * 10, Math.cos(az) * Math.cos(elevation) * 10);
     light.castShadow = true;
@@ -108,7 +113,7 @@ export function createLighting(renderer, scene) {
       root.traverse(object => {
         for (const material of Array.isArray(object.material) ? object.material : object.material ? [object.material] : []) {
           if (!material.isMeshStandardMaterial || material.userData.floorSurface) continue;
-          material.envMap = bounce; material.envMapIntensity = 0.45; material.needsUpdate = true;
+          material.envMap = bounce; material.envMapIntensity = nativeLook.bounce; material.needsUpdate = true;
         }
       });
     },
@@ -120,10 +125,49 @@ export function createLighting(renderer, scene) {
   };
 }
 
-/** Preserve antialiased transparent edges through the HDR -> sRGB conversion. */
-export function createOutputPass() {
+/** Koini's 30-band rounded contact patch; geometry keeps it stable while orbiting. */
+export function createContactShadowTexture(size = 128) {
+  const data = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    for (let step = 0; step <= 30; step++) {
+      const t = step / 30, inset = t * 0.16, half = 0.5 - inset;
+      const radius = half * 2 * 0.14;
+      const dx = Math.max(Math.abs((x + 0.5) / size - 0.5) - (half - radius), 0);
+      const dy = Math.max(Math.abs((y + 0.5) / size - 0.5) - (half - radius), 0);
+      if (Math.hypot(dx, dy) <= radius) data[(y * size + x) * 4 + 3] = Math.round(t * t * 255);
+    }
+  }
+  const texture = new THREE.DataTexture(data, size, size);
+  texture.minFilter = texture.magFilter = THREE.LinearFilter;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+export async function loadNativeToneLUT() {
+  const texture = await new THREE.TextureLoader().loadAsync('/assets/rendering/realitykit-tone.png');
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.flipY = false;
+  texture.generateMipmaps = false;
+  texture.minFilter = texture.magFilter = THREE.LinearFilter;
+  return texture;
+}
+
+/** Measured RealityKit HDR colour response, followed by alpha-correct sRGB output. */
+export function createOutputPass(toneLUT) {
   const pass = new OutputPass();
-  const shader = pass.material.fragmentShader.replace('// tone mapping', `
+  pass.uniforms.nativeToneLUT = { value: toneLUT };
+  let shader = pass.material.fragmentShader.replace('varying vec2 vUv;', `
+    uniform sampler2D nativeToneLUT;
+    // The atlas samples a 33-cube in linear sRGB, log distributed from 0 to 15.9375.
+    vec3 nativeToneMapping(vec3 color) {
+      vec3 p = clamp(log2(1.0 + 16.0 * max(color * toneMappingExposure, 0.0)) / 8.0, 0.0, 1.0) * 32.0;
+      float blue = floor(p.b);
+      vec2 uv = (vec2(p.r + blue * 33.0, p.g) + 0.5) / vec2(1089.0, 33.0);
+      vec2 nextUV = (vec2(p.r + min(blue + 1.0, 32.0) * 33.0, p.g) + 0.5) / vec2(1089.0, 33.0);
+      return mix(texture2D(nativeToneLUT, uv).rgb, texture2D(nativeToneLUT, nextUV).rgb, fract(p.b));
+    }
+    varying vec2 vUv;`).replace('CustomToneMapping( gl_FragColor.rgb )', 'nativeToneMapping( gl_FragColor.rgb )');
+  shader = shader.replace('// tone mapping', `
     float coverage = gl_FragColor.a;
     gl_FragColor.rgb = coverage > 0.000001 ? gl_FragColor.rgb / coverage : vec3(0.0);
     // tone mapping`);

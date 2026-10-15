@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
-import { loadSurface, surfaceSets } from './rendering.js';
+import { createContactShadowTexture, loadSurface, surfaceSets } from './rendering.js';
 import featuredRoom from './featured-room.json' with { type: 'json' };
 
 export function centerModel(model, width) {
@@ -51,7 +51,7 @@ export async function createRoom() {
     Object.assign(floorMaterial, { map: set.color, normalMap: set.normal, roughnessMap: set.roughness, aoMap: set.ao, needsUpdate: true });
   };
   applyFloor(featuredRoom.floorMaterial);
-  box(room, width, 0.06, depth, 0, -0.03, 0, floorMaterial);
+  box(room, width, 0.06, depth, 0, -0.03, 0, floorMaterial).castShadow = false;
   let plaster;
   try { plaster = await loadSurface('plaster', 1, 1); }
   catch (error) { disposeObject(room); for (const texture of ownedTextures) texture.dispose(); throw error; }
@@ -60,25 +60,28 @@ export async function createRoom() {
   const trim = material('#f5f2e9', 0.45);
   const walls = [];
   for (const [x, z, w, d, nx, nz] of [
-    [0, -depth / 2 - 0.05, width + 0.2, 0.1, 0, 1],
-    [0, depth / 2 + 0.05, width + 0.2, 0.1, 0, -1],
-    [-width / 2 - 0.05, 0, 0.1, depth, 1, 0],
-    [width / 2 + 0.05, 0, 0.1, depth, -1, 0],
+    [0, -depth / 2 + 0.015, width, 0.03, 0, 1],
+    [0, depth / 2 - 0.015, width, 0.03, 0, -1],
+    [-width / 2 + 0.015, 0, 0.03, depth, 1, 0],
+    [width / 2 - 0.015, 0, 0.03, depth, -1, 0],
   ]) {
     const group = new THREE.Group(); group.position.set(x, 0, z);
     const maps = {};
     for (const [key, texture] of Object.entries(plaster)) {
       maps[key] = texture.clone();
       maps[key].repeat.set((nx ? depth : width) / surfaceSets.plaster.tile, height / surfaceSets.plaster.tile);
+      maps[key].offset.y = 1 - maps[key].repeat.y;
       ownedTextures.add(maps[key]);
     }
     const wallMaterial = new THREE.MeshStandardMaterial({ color: wallTint, map: maps.color, normalMap: maps.normal, roughnessMap: maps.roughness, aoMap: maps.ao, roughness: 1 });
-    box(group, w, height, d, 0, height / 2, 0, wallMaterial);
-    box(group, nx ? 0.025 : width, 0.09, nz ? 0.025 : depth,
-      nx * 0.0625, 0.045, nz * 0.0625, trim, 0.003);
+    box(group, w, height, d, 0, height / 2, 0, wallMaterial).castShadow = false;
+    box(group, nx ? 0.014 : width, 0.085, nz ? 0.014 : depth,
+      nx * 0.022, 0.0425, nz * 0.022, trim, 0.006).castShadow = false;
     room.add(group); walls.push({ group, normal: new THREE.Vector3(nx, 0, nz) });
   }
   const loader = new GLTFLoader();
+  const contactTexture = createContactShadowTexture();
+  ownedTextures.add(contactTexture);
   try {
     const results = await Promise.allSettled(featuredRoom.items.map(async item => {
       let holder;
@@ -112,6 +115,18 @@ export async function createRoom() {
       throw failed.reason;
     }
     room.add(...results.map(result => result.value));
+    for (const [index, item] of featuredRoom.items.entries()) {
+      if (item.rotationXDeg || item.rotationZDeg) continue;
+      const lift = THREE.MathUtils.clamp(item.elevationCm / 100, 0, 1);
+      const spread = 1.08 + lift * 0.9;
+      const shadow = new THREE.Mesh(new THREE.PlaneGeometry(item.widthCm / 100 * spread, item.depthCm / 100 * spread),
+        new THREE.MeshBasicMaterial({ map: contactTexture, transparent: true, opacity: 0.58 * (1 - lift * 0.72), depthWrite: false, toneMapped: false }));
+      const holder = results[index].value;
+      shadow.name = 'contactShadow'; shadow.rotation.set(-Math.PI / 2, 0, holder.rotation.y, 'XYZ');
+      shadow.position.set(holder.position.x, 0.003, holder.position.z);
+      shadow.renderOrder = 1;
+      room.add(shadow);
+    }
   } catch (error) {
     disposeObject(room);
     for (const texture of ownedTextures) texture.dispose();

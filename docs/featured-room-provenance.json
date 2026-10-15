@@ -31,5 +31,5 @@
   "table": "Koini FurnitureNodes.slabTableParts: original declared dimensions, panel thickness, leg positions, colour, roughness and edge radii.",
   "posters": "Koini RealityKit RoomScene renderer; exact saved room, with oak, light oak and herringbone floor variants. Display P3 renders are converted to sRGB before web encoding; CSS blending does not alter their colours.",
   "privacy": "Only the selected room’s display layout is published. Other rooms, device preferences, account identifiers and credentials are excluded.",
-  "browserRendering": "Native HDR studio design, two warm directional lights, floor bounce, physically scaled colour/normal/roughness/occlusion textures, filtered soft shadows, GTAO contact occlusion, multisample antialiasing, linear HDR post-processing, matching 43-degree room camera."
+  "browserRendering": "Measured RealityKit HDR colour-response atlas, calibrated warm directional and environment lighting, original PBR channels with matching metre scale and native texture origins, 3 cm inward-set cutaway walls and 8.5 cm baseboards, noncasting room shell, stable native-style contact patches, filtered shadows, multisample antialiasing and alpha-correct linear HDR output. No broad screen-space occlusion pass."
 }

@@ -3,15 +3,14 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
-import { createLighting, createOutputPass } from './rendering.js';
+import { createLighting, createOutputPass, loadNativeToneLUT } from './rendering.js';
 import { centerModel, createRoom, disposeObject } from './room-scene.js';
 
 const views = { iso: [1, 0.8, 1.3], front: [0, 0.15, 1], back: [0, 0.15, -1], left: [-1, 0.15, 0], right: [1, 0.15, 0], top: [0, 1, 0.001] };
 const controlClass = 'cursor-pointer rounded-md border border-[#bcc7b5] bg-[#f6f6f0]/95 px-2 py-1 text-[11px] text-[#354d3b] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#aa6e43]';
 
 export async function mountViewer(host) {
-  let renderer, object, controls, observer, visibility, room, lighting, composer;
+  let renderer, object, controls, observer, visibility, room, lighting, composer, toneLUT;
   let dirty = true;
   let renderedFrames = 0;
   let disposed = false;
@@ -22,6 +21,7 @@ export async function mountViewer(host) {
     renderer?.setAnimationLoop(null); observer?.disconnect(); visibility?.disconnect(); controls?.dispose();
     if (object) disposeObject(object);
     room?.dispose(); lighting?.dispose();
+    toneLUT?.dispose();
     if (composer) { for (const pass of composer.passes) pass.dispose(); composer.dispose(); }
     renderer?.dispose(); renderer?.domElement.remove();
   };
@@ -29,7 +29,7 @@ export async function mountViewer(host) {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.NeutralToneMapping;
+    renderer.toneMapping = THREE.CustomToneMapping;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap;
     const canvas = renderer.domElement;
@@ -77,11 +77,8 @@ export async function mountViewer(host) {
     const target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: Math.min(4, renderer.capabilities.maxSamples) });
     composer = new EffectComposer(renderer, target);
     composer.addPass(new RenderPass(scene, camera));
-    if (room) {
-      const ao = new GTAOPass(scene, camera, 1, 1, undefined, { radius: 0.3, thickness: 0.5, distanceFallOff: 1, scale: 1, samples: 16, screenSpaceRadius: false }, { radius: 4, samples: 16, depthPhi: 5, normalPhi: 8 });
-      ao.blendIntensity = 0.8; composer.addPass(ao);
-    }
-    composer.addPass(createOutputPass());
+    toneLUT = await loadNativeToneLUT();
+    composer.addPass(createOutputPass(toneLUT));
     const toolbar = document.createElement('div');
     toolbar.className = 'absolute inset-x-3 bottom-3 z-10 flex flex-wrap items-center justify-center gap-1 rounded-lg bg-[#eef0e9]/80 p-1.5 backdrop-blur-sm';
     toolbar.setAttribute('role', 'group'); toolbar.setAttribute('aria-label', `${host.dataset.name} camera controls`);

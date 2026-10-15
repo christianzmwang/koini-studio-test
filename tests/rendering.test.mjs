@@ -1,5 +1,6 @@
 import { test } from 'node:test';
-import { access } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { Texture, SRGBColorSpace, NoColorSpace, LinearSRGBColorSpace, FloatType, RepeatWrapping } from 'three';
 import { configureSurfaceTexture, createKoiniEnvironment, surfaceSets } from '../site/rendering.js';
@@ -13,8 +14,25 @@ test('surface relief channels stay linear while colour maps use sRGB', () => {
     // Herringbone represents a 3.4 metre patch in Koini, not an arbitrary 3x3 repeat.
     assert.ok(Math.abs(texture.repeat.x * 3.4 - 4) < 1e-10);
     assert.ok(Math.abs(texture.repeat.y * 3.4 - 3) < 1e-10);
+    // A point half a metre below the native image's top edge must land on that
+    // same texel after Three's bottom-left UV convention and repeat transform.
+    const surfaceV = 1 - 0.5 / 3;
+    const imageV = 1 - (surfaceV * texture.repeat.y + texture.offset.y);
+    assert.ok(Math.abs(imageV - 0.5 / 3.4) < 1e-10);
     texture.dispose();
   }
+});
+
+test('the measured native colour atlas is published losslessly with its provenance', async () => {
+  const provenance = JSON.parse(await readFile('docs/render-calibration.json', 'utf8'));
+  const atlas = await readFile(`dist${provenance.atlas.asset}`);
+  assert.equal(atlas.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+  assert.deepEqual([atlas.readUInt32BE(16), atlas.readUInt32BE(20)], [1089, 33]);
+  assert.equal(atlas[24], 8);
+  assert.equal(createHash('sha256').update(atlas).digest('hex'), provenance.atlas.sha256);
+  await access(provenance.atlas.generator);
+  await assert.rejects(access('dist/__calibration'));
+  await assert.rejects(access('dist/render-reference'));
 });
 
 test('the lighting retains HDR window highlights and responds to the actual floor colour', () => {

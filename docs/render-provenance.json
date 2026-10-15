@@ -24,7 +24,13 @@
     "views": [
       "front",
       "side"
-    ]
+    ],
+    "webModel": {
+      "path": "/assets/models/bohus-313245.glb",
+      "conversion": "Blender 5.1.1 USD import, glTF 2.0 export, Y up; original geometry and materials; textures up to 2048 px, WebP quality 95",
+      "sourceSHA256": "34b2b573fc729a532e04b86376e3970c670c1ad95ed35bebe2ba65c02f356c71",
+      "sha256": "2badcfe7ac0b4d37f3c87ef71ca83d8bc93bc2ce7039620e8a2aa5b7df6d0a5d"
+    }
   },
   {
     "id": "bohus-333211",
@@ -51,11 +57,17 @@
     "views": [
       "front",
       "side"
-    ]
+    ],
+    "webModel": {
+      "path": "/assets/models/bohus-333211.glb",
+      "conversion": "Blender 5.1.1 USD import, glTF 2.0 export, Y up; original geometry and materials; textures up to 2048 px, WebP quality 95",
+      "sourceSHA256": "aa47d0433632d735993333db77a3d6b9dece88b611e459bbec20e0985f5497b6",
+      "sha256": "9e81a381034c3210be41aa86300b08cddc923d0565592d4f0c9236c811aafe24"
+    }
   },
   {
     "id": "bohus-325522",
-    "name": "Storfjord hj\u00f8rnesofa (soft rygg oppsett d, 246 cm)",
+    "name": "Storfjord hjørnesofa (soft rygg oppsett d, 246 cm)",
     "source": "https://koini-api.onrender.com/catalogue/library/bohus-325522.usdz?v=1791502612",
     "productURL": "https://www.bohus.no/sofa/hjornesofa/storfjord-hjornesofa-8",
     "modelSHA256": "72ceea175151079710ce9bf1c279ad04465628b1975962db3731e74f1108023e",
@@ -78,6 +90,12 @@
     "views": [
       "front",
       "side"
-    ]
+    ],
+    "webModel": {
+      "path": "/assets/models/bohus-325522.glb",
+      "conversion": "Blender 5.1.1 USD import, glTF 2.0 export, Y up; original geometry and materials; textures up to 2048 px, WebP quality 95",
+      "sourceSHA256": "72ceea175151079710ce9bf1c279ad04465628b1975962db3731e74f1108023e",
+      "sha256": "8e226d8c234f5d489c14c6849b56c50b3ba26d2b74602eeef190a30a665f59c3"
+    }
   }
 ]

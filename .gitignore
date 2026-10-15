@@ -3,3 +3,7 @@ node_modules/
 .env*
 !.env.example
 dist/
+
+# Local iPhone room exports are private and never published.
+.local/
+__pycache__/

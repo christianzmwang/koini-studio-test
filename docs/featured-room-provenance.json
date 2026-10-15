@@ -1,0 +1,35 @@
+{
+  "name": "Meeting demo",
+  "source": "Selected room exported locally from the user-authorized Koini TestFlight container; matched to the supplied shared link using the app’s room-sharing record.",
+  "publicLayout": "site/featured-room.json",
+  "dimensionsMeters": [
+    4,
+    3,
+    2.5
+  ],
+  "floor": "herringbone",
+  "wallColorHex": "#b98a72",
+  "furnitureCount": 3,
+  "models": [
+    {
+      "name": "Lukas 3,5 seter sofa, rød",
+      "source": "https://koini-api.onrender.com/catalogue/library/bohus-334553.usdz?v=1791501762",
+      "sourceSHA256": "1fbab66e4a54af726785b5543865d1601ab4dedac0285f51520fc9cfc5b38033",
+      "webModel": "/assets/models/bohus-334553.glb",
+      "webSHA256": "0818a7b4206691864b25ad4449bc4906cbd37950e80460babea9b189d5a80ec3",
+      "conversion": "Blender 5.1.1, original mesh/materials, Y up, textures up to 2048 px, WebP quality 95"
+    },
+    {
+      "name": "Moss sovestol",
+      "source": "https://koini-api.onrender.com/catalogue/library/bohus-313245.usdz?v=1791673724",
+      "sourceSHA256": "34b2b573fc729a532e04b86376e3970c670c1ad95ed35bebe2ba65c02f356c71",
+      "webModel": "/assets/models/bohus-313245.glb",
+      "webSHA256": "2badcfe7ac0b4d37f3c87ef71ca83d8bc93bc2ce7039620e8a2aa5b7df6d0a5d",
+      "conversion": "Blender 5.1.1, original mesh/materials, Y up, textures up to 2048 px, WebP quality 95"
+    }
+  ],
+  "table": "Koini FurnitureNodes.slabTableParts: original declared dimensions, panel thickness, leg positions, colour, roughness and edge radii.",
+  "posters": "Koini RealityKit RoomScene renderer; exact saved room, with oak, light oak and herringbone floor variants. Display P3 renders are converted to sRGB before web encoding; CSS blending does not alter their colours.",
+  "privacy": "Only the selected room’s display layout is published. Other rooms, device preferences, account identifiers and credentials are excluded.",
+  "browserRendering": "Native HDR studio design, two warm directional lights, floor bounce, physically scaled colour/normal/roughness/occlusion textures, filtered soft shadows, GTAO contact occlusion, multisample antialiasing, linear HDR post-processing, matching 43-degree room camera."
+}

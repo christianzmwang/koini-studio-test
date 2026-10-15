@@ -1,0 +1,301 @@
+{
+  "source": "Poly Haven",
+  "licence": "CC0 1.0 Universal",
+  "licenceURL": "https://polyhaven.com/license",
+  "encoding": "Original Koini 1024px maps; color JPEGs preserved and supplemental maps losslessly encoded as WebP. Normal, roughness and occlusion channels remain linear data.",
+  "sets": [
+    {
+      "asset": "wood_floor",
+      "authors": [
+        "Dimitrios Savva"
+      ],
+      "colour": "FloorOak_Colour.jpg",
+      "files": {
+        "FloorOak_Colour.jpg": {
+          "bytes": 312880,
+          "from": "wood_floor_diff_2k.png",
+          "fromMD5": "4801d7ad3720166655a251920197646f",
+          "pixels": 1024,
+          "sha256": "4be77aed3c0ea855306c39df96cecb529f189b5445c36ad49397da17919b236c"
+        },
+        "FloorOak_Normal.png": {
+          "bytes": 1265664,
+          "from": "wood_floor_nor_gl_2k.png",
+          "fromMD5": "c50f8bf962667821336e492f98ab5e73",
+          "pixels": 1024,
+          "sha256": "b657d6bbd582d360215b59a655d4a9687cfa80c6c07de60162bcabe628376924"
+        },
+        "FloorOak_Occlusion.jpg": {
+          "bytes": 364581,
+          "from": "wood_floor_ao_2k.png",
+          "fromMD5": "6e48539fe6bc0c65de403c6d017a7e71",
+          "pixels": 1024,
+          "sha256": "6ab6d77251377c1a3dc1b8b276fa1257735f912b8b18e2b5247b5582f4658059"
+        },
+        "FloorOak_Roughness.jpg": {
+          "bytes": 238475,
+          "from": "wood_floor_rough_2k.png",
+          "fromMD5": "2db115975cc47b44477a107e53d5afc4",
+          "pixels": 1024,
+          "sha256": "2909bd2f8efb9f314f3c3aa61af3e1ad34d8669d02a39d1de2e21b0f4baad70f"
+        },
+        "FloorOak_Swatch.jpg": {
+          "bytes": 13089,
+          "from": "wood_floor_diff_2k.png",
+          "fromMD5": "4801d7ad3720166655a251920197646f",
+          "pixels": 192,
+          "sha256": "de24f89a283c08b294f2ab40fd15581c97f141c2d241071e62de95565c871e1c"
+        }
+      },
+      "heightCm": 170,
+      "joints": [
+        [
+          0.70548
+        ],
+        [
+          0.36966
+        ],
+        [
+          0.91648
+        ],
+        [
+          0.69302
+        ],
+        [
+          0.37312
+        ],
+        [
+          0.13564
+        ],
+        [
+          0.96513
+        ],
+        [
+          0.39495
+        ],
+        [
+          0.9135
+        ]
+      ],
+      "meanColour": "#816042",
+      "name": "FloorOak",
+      "normal": "FloorOak_Normal.png",
+      "occlusion": "FloorOak_Occlusion.jpg",
+      "roughness": "FloorOak_Roughness.jpg",
+      "seams": [
+        0.11096,
+        0.22208,
+        0.33351,
+        0.4443,
+        0.55556,
+        0.66672,
+        0.77748,
+        0.88852,
+        0.99958
+      ],
+      "swatch": "FloorOak_Swatch.jpg",
+      "url": "https://polyhaven.com/a/wood_floor",
+      "widthCm": 170
+    },
+    {
+      "asset": "laminate_floor_02",
+      "authors": [
+        "Charlotte Baglioni",
+        "Dario Barresi"
+      ],
+      "colour": "FloorLightOak_Colour.jpg",
+      "files": {
+        "FloorLightOak_Colour.jpg": {
+          "bytes": 329867,
+          "from": "laminate_floor_02_diff_2k.png",
+          "fromMD5": "9a91778e69e94138f573c708d28585c6",
+          "pixels": 1024,
+          "sha256": "2a1c22d10a45cf3f31cd18e4488b02bf675290ba0d764fb2c0fdaf05f8b37620"
+        },
+        "FloorLightOak_Normal.png": {
+          "bytes": 1401486,
+          "from": "laminate_floor_02_nor_gl_2k.png",
+          "fromMD5": "027d47a35d41f051525cb985f3917d99",
+          "pixels": 1024,
+          "sha256": "cf83fd8c5807cfa2664129739731c954361e70d80b72aa02ebac6e8310d059b0"
+        },
+        "FloorLightOak_Occlusion.jpg": {
+          "bytes": 143121,
+          "from": "laminate_floor_02_ao_2k.png",
+          "fromMD5": "6e1435dd3514549b898282bf62b68538",
+          "pixels": 1024,
+          "sha256": "7119f9eb43382cd6e6d76f892d7642495b85a26e162573fa55d92430f1cada60"
+        },
+        "FloorLightOak_Roughness.jpg": {
+          "bytes": 259915,
+          "from": "laminate_floor_02_rough_2k.png",
+          "fromMD5": "94cafecc31dfc0f2e3032811560f3d09",
+          "pixels": 1024,
+          "sha256": "6c8c0657044d0e9e4a3e43bf7f5b5b424b904d5d3769fcbc552a0dee720070f4"
+        },
+        "FloorLightOak_Swatch.jpg": {
+          "bytes": 12694,
+          "from": "laminate_floor_02_diff_2k.png",
+          "fromMD5": "9a91778e69e94138f573c708d28585c6",
+          "pixels": 192,
+          "sha256": "254a3b3456f80853a89d4c123ec17e72fedf0af3a8832ac34a6a954c9f5a0205"
+        }
+      },
+      "heightCm": 170,
+      "joints": [
+        [
+          0.60216
+        ],
+        [
+          0.75099
+        ],
+        [
+          0.90086
+        ],
+        [
+          0.58243
+        ],
+        [
+          0.75305
+        ],
+        [
+          0.90817
+        ],
+        [
+          0.05932
+        ],
+        [
+          0.20541
+        ]
+      ],
+      "meanColour": "#9c8164",
+      "name": "FloorLightOak",
+      "normal": "FloorLightOak_Normal.png",
+      "occlusion": "FloorLightOak_Occlusion.jpg",
+      "quarterTurn": true,
+      "roughness": "FloorLightOak_Roughness.jpg",
+      "seams": [
+        0.05968,
+        0.18481,
+        0.30986,
+        0.43507,
+        0.55979,
+        0.6848,
+        0.80963,
+        0.93464
+      ],
+      "swatch": "FloorLightOak_Swatch.jpg",
+      "url": "https://polyhaven.com/a/laminate_floor_02",
+      "widthCm": 170
+    },
+    {
+      "asset": "herringbone_parquet",
+      "authors": [
+        "Sergej Majboroda",
+        "Jenelle van Heerden"
+      ],
+      "colour": "FloorHerringbone_Colour.jpg",
+      "files": {
+        "FloorHerringbone_Colour.jpg": {
+          "bytes": 383220,
+          "from": "herringbone_parquet_diff_2k.png",
+          "fromMD5": "4d30228a259f54d9217b373715e0aedb",
+          "pixels": 1024,
+          "sha256": "fdead7badeba37b99b77c61ed6f2ac4e14d02878767dadddc391c59f442bcd53"
+        },
+        "FloorHerringbone_Normal.png": {
+          "bytes": 1196776,
+          "from": "herringbone_parquet_nor_gl_2k.png",
+          "fromMD5": "592dcdc7741f13765bf7bd18398f3312",
+          "pixels": 1024,
+          "sha256": "f7e2c32a64c2099c4c20773099ec41c87c5c11c5131e9a1aa5dab6130e3c541a"
+        },
+        "FloorHerringbone_Occlusion.jpg": {
+          "bytes": 130608,
+          "from": "herringbone_parquet_ao_2k.png",
+          "fromMD5": "5137bc8bb75141c44602a2cd18847c4b",
+          "pixels": 1024,
+          "sha256": "270ad7c243b234cc0481870c00e44bbf89fa6557d6561bd353435ee6fed68390"
+        },
+        "FloorHerringbone_Roughness.jpg": {
+          "bytes": 222477,
+          "from": "herringbone_parquet_rough_2k.png",
+          "fromMD5": "417c9fc63d42dadb388745f90ff74a48",
+          "pixels": 1024,
+          "sha256": "288b760091a986c0c6e454789ff59d6495c05c7a271a6cf9e44f2359a637b3ef"
+        },
+        "FloorHerringbone_Swatch.jpg": {
+          "bytes": 16969,
+          "from": "herringbone_parquet_diff_2k.png",
+          "fromMD5": "4d30228a259f54d9217b373715e0aedb",
+          "pixels": 192,
+          "sha256": "6d3a08ed7717dc2c6d87f594ccf1603ed1548a4b0c9ef7d359a4251f69bc6622"
+        }
+      },
+      "heightCm": 340,
+      "meanColour": "#94714e",
+      "name": "FloorHerringbone",
+      "normal": "FloorHerringbone_Normal.png",
+      "occlusion": "FloorHerringbone_Occlusion.jpg",
+      "roughness": "FloorHerringbone_Roughness.jpg",
+      "roughnessLift": 0.3,
+      "swatch": "FloorHerringbone_Swatch.jpg",
+      "url": "https://polyhaven.com/a/herringbone_parquet",
+      "widthCm": 340
+    },
+    {
+      "asset": "white_stucco",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "colour": "WallPlaster_Colour.jpg",
+      "files": {
+        "WallPlaster_Colour.jpg": {
+          "bytes": 253541,
+          "from": "white_stucco_diff_2k.png",
+          "fromMD5": "0b4f7710595002c8e872054c1d4263af",
+          "pixels": 1024,
+          "sha256": "4d7b01109bf273dbc58a85087d5ccc7c3fde44cafb364ea0c89b3979c6379578"
+        },
+        "WallPlaster_Normal.png": {
+          "bytes": 2183347,
+          "from": "white_stucco_nor_gl_2k.png",
+          "fromMD5": "dc400bce80d20eb54bd71809767c7fe4",
+          "pixels": 1024,
+          "sha256": "b1d84296b0fb05c832f66b02af2dce0b9bed1e2153607cf158cd5604c204babb"
+        },
+        "WallPlaster_Occlusion.jpg": {
+          "bytes": 50733,
+          "from": "white_stucco_ao_2k.png",
+          "fromMD5": "dcc2113d975a2f07bd99a8d4b96449ff",
+          "pixels": 512,
+          "sha256": "b20036352d3c5b423f95b9e63bc615652003b9adab8aa83b047cfd37e2face72"
+        },
+        "WallPlaster_Roughness.jpg": {
+          "bytes": 23220,
+          "from": "white_stucco_rough_2k.png",
+          "fromMD5": "af21878a6ef02457e4dd923700491ef0",
+          "pixels": 512,
+          "sha256": "008a9d03812abb2168fead071b2a36740ba43c9d1fecc0e23f166df12ed269e9"
+        },
+        "WallPlaster_Swatch.jpg": {
+          "bytes": 14299,
+          "from": "white_stucco_diff_2k.png",
+          "fromMD5": "0b4f7710595002c8e872054c1d4263af",
+          "pixels": 192,
+          "sha256": "d87fb4e5eaf3c58b3e480c0429eda5df824a2d61892552e1781d911a1e3775f0"
+        }
+      },
+      "heightCm": 199.8,
+      "name": "WallPlaster",
+      "neutralMean": 0.9092,
+      "neutralTarget": 0.95,
+      "normal": "WallPlaster_Normal.png",
+      "occlusion": "WallPlaster_Occlusion.jpg",
+      "roughness": "WallPlaster_Roughness.jpg",
+      "swatch": "WallPlaster_Swatch.jpg",
+      "url": "https://polyhaven.com/a/white_stucco",
+      "widthCm": 199.8
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 import { routes } from '@vercel/config/v1';
 
 export const config = {
-  buildCommand: 'npm run build',
+  installCommand: 'pnpm install --frozen-lockfile',
+  buildCommand: 'pnpm build',
   outputDirectory: 'dist',
   framework: null,
   cleanUrls: true,

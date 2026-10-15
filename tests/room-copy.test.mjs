@@ -65,3 +65,10 @@ test('the app association matches the signed customer app and only room-copy pat
     appIDs: ['9X55B435P8.com.christianwang.koini'], components: [{ '/': '/room-copy/*' }],
   }]);
 });
+
+test('the room landing page assets are included in the production build', async () => {
+  for (const file of ['room-copy.css', 'room-copy.js']) {
+    const source = await readFile(`site/public/${file}`, 'utf8');
+    assert.equal(await readFile(`dist/${file}`, 'utf8'), source);
+  }
+});

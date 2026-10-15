@@ -1,0 +1,99 @@
+{
+  "download": "2K, 16-bit PNG",
+  "jpegQuality": 0.82,
+  "licence": "CC0 1.0 Universal",
+  "licenceURL": "https://polyhaven.com/license",
+  "sets": [
+    {
+      "asset": "wood_floor",
+      "authors": [
+        "Dimitrios Savva"
+      ],
+      "colour": "FloorOak_Colour.jpg",
+      "files": {
+        "FloorOak_Colour.jpg": {
+          "bytes": 312880,
+          "from": "wood_floor_diff_2k.png",
+          "fromMD5": "4801d7ad3720166655a251920197646f",
+          "pixels": 1024,
+          "sha256": "4be77aed3c0ea855306c39df96cecb529f189b5445c36ad49397da17919b236c"
+        }
+      },
+      "heightCm": 170,
+      "meanColour": "#816042",
+      "name": "FloorOak",
+      "seams": [
+        0.11096,
+        0.22208,
+        0.33351,
+        0.4443,
+        0.55556,
+        0.66672,
+        0.77748,
+        0.88852,
+        0.99958
+      ],
+      "url": "https://polyhaven.com/a/wood_floor",
+      "widthCm": 170
+    },
+    {
+      "asset": "laminate_floor_02",
+      "authors": [
+        "Charlotte Baglioni",
+        "Dario Barresi"
+      ],
+      "colour": "FloorLightOak_Colour.jpg",
+      "files": {
+        "FloorLightOak_Colour.jpg": {
+          "bytes": 329867,
+          "from": "laminate_floor_02_diff_2k.png",
+          "fromMD5": "9a91778e69e94138f573c708d28585c6",
+          "pixels": 1024,
+          "sha256": "2a1c22d10a45cf3f31cd18e4488b02bf675290ba0d764fb2c0fdaf05f8b37620"
+        }
+      },
+      "heightCm": 170,
+      "meanColour": "#9c8164",
+      "name": "FloorLightOak",
+      "quarterTurn": true,
+      "seams": [
+        0.05968,
+        0.18481,
+        0.30986,
+        0.43507,
+        0.55979,
+        0.6848,
+        0.80963,
+        0.93464
+      ],
+      "url": "https://polyhaven.com/a/laminate_floor_02",
+      "widthCm": 170
+    },
+    {
+      "asset": "herringbone_parquet",
+      "authors": [
+        "Sergej Majboroda",
+        "Jenelle van Heerden"
+      ],
+      "colour": "FloorHerringbone_Colour.jpg",
+      "files": {
+        "FloorHerringbone_Colour.jpg": {
+          "bytes": 383220,
+          "from": "herringbone_parquet_diff_2k.png",
+          "fromMD5": "4d30228a259f54d9217b373715e0aedb",
+          "pixels": 1024,
+          "sha256": "fdead7badeba37b99b77c61ed6f2ac4e14d02878767dadddc391c59f442bcd53"
+        }
+      },
+      "heightCm": 340,
+      "meanColour": "#94714e",
+      "name": "FloorHerringbone",
+      "roughnessLift": 0.3,
+      "url": "https://polyhaven.com/a/herringbone_parquet",
+      "widthCm": 340
+    }
+  ],
+  "source": "Poly Haven",
+  "sourceURL": "https://polyhaven.com",
+  "swatchQuality": 0.9
+}

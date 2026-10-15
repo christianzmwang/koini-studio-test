@@ -1,0 +1,55 @@
+{
+  "name": "Meeting demo",
+  "widthCm": 400,
+  "lengthCm": 300,
+  "heightCm": 250,
+  "wallColorHex": "#b98a72",
+  "wallMaterial": "plaster",
+  "floorMaterial": "herringbone",
+  "items": [
+    {
+      "name": "Lukas 3,5 seter sofa, rød",
+      "shape": "couch",
+      "widthCm": 256,
+      "heightCm": 83,
+      "depthCm": 108,
+      "x": 141.55242729187012,
+      "y": 87.1573486328125,
+      "elevationCm": 0,
+      "rotationDeg": 0,
+      "rotationXDeg": 0,
+      "rotationZDeg": 0,
+      "colorHex": "#4f2820",
+      "model": "/assets/models/bohus-334553.glb"
+    },
+    {
+      "name": "Moss sovestol",
+      "shape": "couch",
+      "widthCm": 80,
+      "heightCm": 82,
+      "depthCm": 97,
+      "x": 341.1089838486225,
+      "y": 121.61691665649414,
+      "elevationCm": 0,
+      "rotationDeg": 30,
+      "rotationXDeg": 0,
+      "rotationZDeg": 0,
+      "colorHex": "#cfc2ad",
+      "model": "/assets/models/bohus-313245.glb"
+    },
+    {
+      "name": "LACK table",
+      "shape": "slabTable",
+      "widthCm": 90,
+      "heightCm": 45,
+      "depthCm": 55,
+      "x": 142.64049530029297,
+      "y": 209.78593409061432,
+      "elevationCm": 0,
+      "rotationDeg": 0,
+      "rotationXDeg": 0,
+      "rotationZDeg": 0,
+      "colorHex": "#e4e1da"
+    }
+  ]
+}

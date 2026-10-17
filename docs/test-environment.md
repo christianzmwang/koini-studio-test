@@ -9,6 +9,10 @@ The test website uses `https://koini-studio-test.vercel.app`. The Google web
 OAuth client is named **Koini Studio Test — disposable** in Google Cloud project
 `gen-lang-client-0184978152`. This is a separate client from Lab3D, Sofia Review,
 and the production Studio website. Only the test origin is authorized. The
+test client ID is
+`1030519420718-ohu4q2bdpgsqphn39j1o7slo928l55ip.apps.googleusercontent.com`.
+The Google consent app is in testing mode; its test-user list controls which
+accounts Google accepts. The
 server verifies the test client ID and signs host-only sessions with its own
 random `AUTH_SECRET`; production secrets are not copied.
 
@@ -24,7 +28,9 @@ disabled on the test copy.
 - Vercel project: `koini-studio-test`, ID `prj_gG6kymcdh3OSklZRbYxyotbuRqxg`,
   team `christianzmwangs-projects`; deleting it removes its deployments and envs.
 - Google OAuth web client: **Koini Studio Test — disposable** in
-  `gen-lang-client-0184978152`; delete this client only, keeping the cloud project
+  `gen-lang-client-0184978152`, client ID
+  `1030519420718-ohu4q2bdpgsqphn39j1o7slo928l55ip.apps.googleusercontent.com`;
+  delete this client only, keeping the cloud project
   and the existing Studio/Lab3D/Sofia clients.
 - Local test checkout: `.local/koini-studio-test` inside the original checkout.
 

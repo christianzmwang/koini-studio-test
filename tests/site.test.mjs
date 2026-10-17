@@ -11,7 +11,7 @@ const gallery = JSON.parse(await readFile('site/public/assets/gallery.json', 'ut
 test('the built page references existing images, styles, scripts and 3D models', async () => {
   const html = await readFile('dist/index.html', 'utf8');
   for (const match of html.matchAll(/(?:src|href|data-model)="(\/[^"#]+)"/g)) {
-    if (match[1] === '/' || ['/privacy', '/support'].includes(match[1]) || /^\/room-copy\/[0-9a-f]{32}$/.test(match[1])) continue;
+    if (match[1] === '/' || ['/privacy', '/support', '/auth/signin'].includes(match[1]) || /^\/room-copy\/[0-9a-f]{32}$/.test(match[1])) continue;
     await access('dist' + match[1]);
   }
   assert.equal((html.match(/data-gallery-card/g) ?? []).length, 3);

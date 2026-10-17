@@ -7,6 +7,7 @@ export const config = {
   framework: null,
   cleanUrls: true,
   rewrites: [
+    routes.rewrite('/auth/:action(signin|callback|session|account|signout)', '/api/auth?action=:action'),
     routes.rewrite('/room-copy/:token([0-9a-f]{32})', '/api/room-copy?token=:token'),
     routes.rewrite('/privacy', 'https://koini-api.onrender.com/privacy'),
     routes.rewrite('/support', 'https://koini-api.onrender.com/support'),

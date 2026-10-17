@@ -1,3 +1,11 @@
+fetch('/auth/session', { cache: 'no-store' }).then(response => response.ok ? response.json() : null).then(data => {
+  if (!data?.user) return;
+  for (const link of document.querySelectorAll('[data-account-link]')) {
+    link.href = '/auth/account';
+    link.textContent = 'Your account';
+  }
+}).catch(() => {});
+
 const finishNames = { oak: 'oak', lightOak: 'light oak', herringbone: 'herringbone' };
 for (const card of document.querySelectorAll('[data-room-card]')) {
   const buttons = card.querySelectorAll('[data-floor]');

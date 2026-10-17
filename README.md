@@ -69,6 +69,40 @@ Vercel project: `koini-studio`, team `christianzmwangs-projects`.
 Cloudflare manages DNS; the apex and `open` subdomain use the project-specific Vercel CNAME with
 proxying disabled. Deployment credentials and `.vercel/` stay out of Git.
 
+## Google sign-in
+
+The header's **Sign in** link opens `/auth/signin`. Google Identity Services
+uses the existing Lab3D / Sofia Review web OAuth client. Studio verifies the ID
+token with Google's official Node library, checks its browser-specific nonce,
+and creates its own seven-day HttpOnly session. No Google access or refresh
+tokens are stored. Studio sign-in is open to Google accounts accepted by the
+shared Google consent configuration; it does not grant access to Lab3D or sync
+the iPhone app's rooms or furniture.
+
+Server configuration is `GOOGLE_CLIENT_ID`, `AUTH_SECRET` (a Studio-only random
+value of at least 32 characters), and `AUTH_ORIGIN` (`https://koinistudio.com`
+in production). A Google client secret is not used by this sign-in flow.
+Google Cloud's existing client must list `https://koinistudio.com` under
+**Authorized JavaScript origins**. Its existing Lab3D and Sofia redirect URIs
+remain in place; this popup flow does not need a new redirect URI.
+
+For local development, copy `.env.example` to `.env.local`, provide the client
+ID and a separate session secret, then open `http://localhost:55873` after
+`pnpm dev`. Register `http://localhost` and `http://localhost:55873` as JavaScript
+origins on the same Google client. Vite's development and preview middleware
+serve the same auth handlers as Vercel. Random preview deployment hosts send
+visitors to the configured canonical sign-in host.
+
+`api/auth.mjs` serves sign-in, callback, session, account, and POST-only sign-out
+routes through `vercel.mjs`. `lib/auth.mjs` signs and verifies the session and
+login transaction with separate JWT audiences. Callback requests require the
+configured origin, a signed ten-minute login cookie, and a matching nonce in
+the Google ID token. Account output escapes Google profile fields. Sign-out
+requires a session-bound CSRF token. Auth responses are never cached.
+
+`.vercelignore` excludes local exports, environment files, and build artifacts
+from CLI uploads, in addition to the repository's `.gitignore` rules.
+
 ## Private access to saved iPhone rooms
 
 Rooms currently stay on the phone; account sync includes furniture only.

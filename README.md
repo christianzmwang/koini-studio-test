@@ -1,5 +1,11 @@
 # Koini Studio
 
+This is the disposable test copy of Koini Studio. The private repository is
+`christianzmwang/koini-studio-test`; its Vercel project is `koini-studio-test`.
+It uses a separate Google OAuth client and session secret. See
+[the test environment record](docs/test-environment.md) for scope and cleanup.
+The original project notes below describe the functionality copied here.
+
 Koini’s public website at https://koinistudio.com, deployed on Vercel.
 
 ```sh

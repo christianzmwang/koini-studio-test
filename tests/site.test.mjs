@@ -19,6 +19,15 @@ test('the built page references existing images, styles, scripts and 3D models',
   assert.doesNotMatch(html, /<!-- GALLERY -->|data-angle|styles\.css/);
 });
 
+test('every "Explore Koini" call-to-action stays on the site and leads to the Explore section', async () => {
+  const html = await readFile('dist/index.html', 'utf8');
+  const ctas = [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>\s*Explore Koini\b/g)].map(match => match[1]);
+  assert.ok(ctas.length >= 2, 'expected the hero and closing Explore Koini links');
+  for (const href of ctas) assert.equal(href, '#explore');
+  assert.match(html, /id="explore"/);
+  assert.doesNotMatch(html, /youtube\.com/i);
+});
+
 test('each furniture viewer ships a real, self-contained glTF model', async () => {
   const files = new Set([...gallery.map(model => `/assets/models/${model.id}.glb`), ...featuredRoom.items.map(item => item.model).filter(Boolean)]);
   for (const file of files) {

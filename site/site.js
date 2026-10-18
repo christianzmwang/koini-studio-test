@@ -27,8 +27,27 @@ for (const host of document.querySelectorAll('[data-viewer]')) {
   const status = document.createElement('p');
   status.className = 'absolute inset-x-4 top-3 z-10 rounded-md bg-[#f6f6f0]/95 px-3 py-2 text-center text-xs text-[#354d3b]';
   status.setAttribute('role', 'status'); status.hidden = true; host.append(status);
-  start.addEventListener('click', () => {
-    status.textContent = 'Rate is too much';
+  const showError = message => {
+    status.textContent = message;
     status.hidden = false;
+    start.hidden = false;
+    start.disabled = false;
+    start.removeAttribute('aria-busy');
+  };
+  host.addEventListener('viewer-error', event => showError(event.detail?.message || 'The 3D view could not be loaded. Please try again.'));
+  start.addEventListener('click', async () => {
+    if (start.disabled) return;
+    start.disabled = true;
+    start.setAttribute('aria-busy', 'true');
+    status.hidden = true;
+    try {
+      const { mountViewer } = await import('./viewer.js');
+      await mountViewer(host);
+      start.hidden = true;
+      start.removeAttribute('aria-busy');
+    } catch (error) {
+      console.warn('3D viewer failed to load', error);
+      showError('The 3D view could not be loaded. Please try again.');
+    }
   });
 }

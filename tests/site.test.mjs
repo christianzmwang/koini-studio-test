@@ -71,3 +71,10 @@ test('the homepage features the selected saved room and keeps private room expor
   await assert.rejects(access('dist/.local'));
   await assert.rejects(access('dist/rooms.json'));
 });
+
+test('the homepage footer shows the Friction verification note', async () => {
+  const html = await readFile('dist/index.html', 'utf8');
+  const footer = html.match(/<footer[\s\S]*?<\/footer>/i)?.[0] ?? '';
+  assert.ok(footer, 'the built page has a footer');
+  assert.match(footer, /Verified by Friction/, 'the footer contains the exact note text');
+});

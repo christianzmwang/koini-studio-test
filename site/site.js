@@ -27,8 +27,27 @@ for (const host of document.querySelectorAll('[data-viewer]')) {
   const status = document.createElement('p');
   status.className = 'absolute inset-x-4 top-3 z-10 rounded-md bg-[#f6f6f0]/95 px-3 py-2 text-center text-xs text-[#354d3b]';
   status.setAttribute('role', 'status'); status.hidden = true; host.append(status);
-  start.addEventListener('click', () => {
-    status.textContent = 'Rate is too much';
-    status.hidden = false;
+  const show = message => { status.textContent = message; status.hidden = !message; };
+  host.addEventListener('viewer-error', event => {
+    show(event.detail?.message || 'The 3D view could not be shown. Please try again.');
+    start.hidden = false; start.disabled = false;
+  });
+  start.addEventListener('click', async () => {
+    if (start.disabled) return;
+    start.disabled = true;
+    host.setAttribute('aria-busy', 'true');
+    show(`Loading ${host.dataset.name || 'model'} in 3D…`);
+    try {
+      const { mountViewer } = await import('./viewer.js');
+      await mountViewer(host);
+      start.hidden = true;
+      show('');
+    } catch (error) {
+      console.warn('3D viewer failed to load', error);
+      show('The 3D view could not be loaded on this device. Please try again.');
+      start.disabled = false;
+    } finally {
+      host.removeAttribute('aria-busy');
+    }
   });
 }

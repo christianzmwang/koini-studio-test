@@ -34,6 +34,15 @@ test('sign-in issues a signed short-lived nonce and secure host-only cookie', as
   assert.match(await response.text(), new RegExp(`data-nonce="${transaction.nonce}"`));
 });
 
+test('sign-in page lets Google Identity Services see its origin so the Google button can load', async () => {
+  const response = await GET(request('signin'));
+  const policy = response.headers.get('referrer-policy');
+  // same-origin and no-referrer strip the Referer on accounts.google.com requests, and Google
+  // then rejects the button with "The given origin is not allowed for the given client ID".
+  assert.equal(policy, 'strict-origin-when-cross-origin');
+  assert.match(response.headers.get('content-security-policy'), /frame-src https:\/\/accounts\.google\.com\/gsi\//);
+});
+
 test('session signing rejects tampering, expiry, wrong purpose, origin and secret', async () => {
   const token = await sign({ sub: 'google-id', email: 'person@example.com' }, 'session', 60);
   assert.equal((await verify(token, 'session')).sub, 'google-id');
@@ -74,7 +83,7 @@ test('verified Google identity creates a separate session; account escapes profi
   const identity = await GET(request('session', { headers: { cookie: sessionCookie } }));
   assert.equal((await identity.json()).user.id, 'google-id');
   const account = await GET(request('account', { headers: { cookie: sessionCookie } }));
-  assert.equal(account.headers.get('referrer-policy'), 'same-origin');
+  assert.equal(account.headers.get('referrer-policy'), 'strict-origin-when-cross-origin');
   const html = await account.text();
   assert.match(html, /&lt;img/);
   assert.doesNotMatch(html, /<img src=x/);

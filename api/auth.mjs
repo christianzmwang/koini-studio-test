@@ -2,7 +2,9 @@ import { cookie, escapeHtml, google, LOGIN_COOKIE, randomToken, session, SESSION
 
 const headers = {
   'Cache-Control': 'no-store',
-  'Referrer-Policy': 'same-origin',
+  // Google Identity Services needs the page origin as Referer on its cross-origin
+  // button/iframe requests; same-origin or no-referrer makes Google reject the client ID.
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',

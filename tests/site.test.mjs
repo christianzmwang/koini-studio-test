@@ -73,3 +73,15 @@ test('the homepage features the selected saved room and keeps private room expor
   await assert.rejects(access('dist/.local'));
   await assert.rejects(access('dist/rooms.json'));
 });
+
+test('every "Explore in 3D" button mounts the real 3D viewer instead of placeholder text', async () => {
+  const source = await readFile('site/site.js', 'utf8');
+  assert.match(source, /import\(['"]\.\/viewer\.js['"]\)/, 'site.js must lazily load the Three.js viewer');
+  assert.match(source, /mountViewer\(host\)/, 'the [data-start] handler must mount the viewer into its host');
+  assert.doesNotMatch(source, /Rate is too much/);
+  const { readdir } = await import('node:fs/promises');
+  const chunks = (await readdir('dist/assets')).filter(name => name.endsWith('.js'));
+  const builtSources = await Promise.all(chunks.map(name => readFile(`dist/assets/${name}`, 'utf8')));
+  assert.ok(builtSources.some(code => code.includes('Interactive 3D view')), 'the built site must ship the viewer module');
+  assert.ok(builtSources.every(code => !code.includes('Rate is too much')));
+});

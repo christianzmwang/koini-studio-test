@@ -60,6 +60,23 @@ test('only the room landing page is forwarded, with no snapshot write API or adm
   assert.ok(config.headers.some(route => route.source === '/room-copy/:path*' && route.headers.some(header => header.key === 'Cache-Control' && header.value === 'no-store')));
 });
 
+test('the homepage keeps a readable FAQ section users can scroll down to', async () => {
+  const html = await readFile('dist/index.html', 'utf8');
+  const start = html.indexOf('id="questions"');
+  assert.ok(start > html.indexOf('id="sharing"'), 'the FAQ section must follow the sharing section on the home page');
+  const section = html.slice(start, html.indexOf('</section>', start));
+  assert.match(section, /id="questions-heading"[^>]*>Room for<br> questions\.<\/h2>/);
+  const faqs = [...section.matchAll(/<details><summary>([^<]+)<span aria-hidden="true">\+<\/span><\/summary><p>([^<]+)<\/p><\/details>/g)];
+  assert.deepEqual(faqs.map(match => match[1]), [
+    'What do I need to use Koini?',
+    'Can I use my own furniture?',
+    'How does room sharing work?',
+    'Does a shared link update when I edit my room?',
+  ]);
+  assert.ok(faqs.every(match => match[2].trim().length > 40), 'every FAQ needs a written answer');
+  assert.match(html, /href="#questions"/, 'the page should link down to the FAQ section');
+});
+
 test('the homepage features the selected saved room and keeps private room exports out of the build', async () => {
   const html = await readFile('dist/index.html', 'utf8');
   assert.equal(featuredRoom.name, 'Meeting demo');

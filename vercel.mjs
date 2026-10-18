@@ -8,6 +8,7 @@ export const config = {
   cleanUrls: true,
   redirects: [
     routes.redirect('/sign-in', '/auth/signin', { statusCode: 307 }),
+    routes.redirect('/login', '/auth/signin', { statusCode: 307 }),
   ],
   rewrites: [
     routes.rewrite('/auth/:action(signin|callback|session|account|signout)', '/api/auth?action=:action'),

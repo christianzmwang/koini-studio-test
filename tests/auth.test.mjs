@@ -34,6 +34,12 @@ test('sign-in issues a signed short-lived nonce and secure host-only cookie', as
   assert.match(await response.text(), new RegExp(`data-nonce="${transaction.nonce}"`));
 });
 
+test('sign-in CSP lets Google size its button iframe without allowing inline scripts', async () => {
+  const csp = (await GET(request('signin'))).headers.get('content-security-policy');
+  assert.match(csp, /style-src [^;]*'unsafe-inline'/);
+  assert.doesNotMatch(csp, /script-src [^;]*'unsafe-inline'/);
+});
+
 test('session signing rejects tampering, expiry, wrong purpose, origin and secret', async () => {
   const token = await sign({ sub: 'google-id', email: 'person@example.com' }, 'session', 60);
   assert.equal((await verify(token, 'session')).sub, 'google-id');

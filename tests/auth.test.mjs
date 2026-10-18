@@ -43,6 +43,15 @@ test('sign-in page lets Google Identity Services see its origin so the Google bu
   assert.match(response.headers.get('content-security-policy'), /frame-src https:\/\/accounts\.google\.com\/gsi\//);
 });
 
+test('sign-in page CSP lets Google Identity Services apply its injected button styles while scripts stay strict', async () => {
+  const response = await GET(request('signin'));
+  const directives = Object.fromEntries(response.headers.get('content-security-policy').split(';').map(d => d.trim().split(/\s+/)).map(([name, ...values]) => [name, values]));
+  // GSI adds <style id="googleidentityservice_button_styles"> and style attributes to the host page.
+  assert.ok(directives['style-src'].includes("'unsafe-inline'"));
+  assert.ok(directives['style-src'].includes('https://accounts.google.com/gsi/style'));
+  assert.deepEqual(directives['script-src'], ["'self'", 'https://accounts.google.com/gsi/client']);
+});
+
 test('session signing rejects tampering, expiry, wrong purpose, origin and secret', async () => {
   const token = await sign({ sub: 'google-id', email: 'person@example.com' }, 'session', 60);
   assert.equal((await verify(token, 'session')).sub, 'google-id');

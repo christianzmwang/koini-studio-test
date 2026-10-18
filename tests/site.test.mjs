@@ -19,6 +19,22 @@ test('the built page references existing images, styles, scripts and 3D models',
   assert.doesNotMatch(html, /<!-- GALLERY -->|data-angle|styles\.css/);
 });
 
+test('the homepage section tabs stay at the top on every screen size and lead to real sections', async () => {
+  const html = await readFile('dist/index.html', 'utf8');
+  const header = html.match(/<div data-site-header class="([^"]*)"/);
+  assert.ok(header, 'the site header wrapper must exist');
+  assert.match(header[1], /(^|\s)sticky(\s|$)/, 'the header must stay at the top while scrolling');
+  assert.match(header[1], /(^|\s)top-0(\s|$)/);
+  const nav = html.match(/<nav aria-label="Main navigation"[^>]*class="([^"]*)"[^>]*>([\s\S]*?)<\/nav>/);
+  assert.ok(nav, 'the main navigation must exist');
+  const classes = nav[1].split(/\s+/);
+  assert.ok(!classes.includes('hidden'), 'the section tabs must not be hidden on small screens');
+  assert.ok(classes.includes('flex'));
+  const targets = [...nav[2].matchAll(/<a href="#([\w-]+)"[^>]*>([^<]+)<\/a>/g)].map(match => [match[1], match[2]]);
+  assert.deepEqual(targets, [['explore', 'The app'], ['lab', 'From the lab'], ['sharing', 'Room sharing']]);
+  for (const [id] of targets) assert.match(html, new RegExp(`<section[^>]*id="${id}"`), `#${id} must be a section on the page`);
+});
+
 test('each furniture viewer ships a real, self-contained glTF model', async () => {
   const files = new Set([...gallery.map(model => `/assets/models/${model.id}.glb`), ...featuredRoom.items.map(item => item.model).filter(Boolean)]);
   for (const file of files) {

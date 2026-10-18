@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="scroll-pt-9 scroll-smooth motion-reduce:scroll-auto">
+<html lang="en" class="scroll-pt-28 scroll-smooth motion-reduce:scroll-auto md:scroll-pt-20">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -20,16 +20,18 @@
 </head>
 <body class="m-0 bg-[#f5f4ef] font-sans text-base leading-relaxed text-[#243c32] antialiased [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-[#aa6e43] [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[#aa6e43] [&_summary:focus-visible]:outline-2 [&_summary:focus-visible]:outline-offset-4">
   <a class="absolute -top-20 left-5 z-50 bg-[#243c32] px-5 py-2.5 text-white focus:top-2.5" href="#main">Skip to content</a>
-  <header class="flex h-[82px] items-center justify-between gap-3 md:h-[94px] md:gap-8 xl:h-28 mx-auto w-[calc(100%-40px)] max-w-[1320px] md:w-[calc(100%-60px)] xl:w-[calc(100%-96px)]">
+  <div data-site-header class="sticky top-0 z-40 border-b border-[#d9ddd3]/80 bg-[#f5f4ef]/95 backdrop-blur supports-[backdrop-filter]:bg-[#f5f4ef]/85">
+  <header class="flex flex-wrap items-center justify-between gap-x-3 pt-4 md:h-20 md:flex-nowrap md:gap-8 md:pt-0 mx-auto w-[calc(100%-40px)] max-w-[1320px] md:w-[calc(100%-60px)] xl:w-[calc(100%-96px)]">
     <a href="/" class="flex items-center gap-2 text-[27px] leading-none tracking-[-.05em] md:text-3xl [&_svg]:size-8" aria-label="Koini Studio home">
       <svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M6 10 18 4l12 6v16l-12 6-12-6V10Z" stroke="currentColor" stroke-width="1.6"/><path d="m6 10 12 6 12-6M18 16v16M6 26l12-6 12 6" stroke="currentColor" stroke-width="1.6"/></svg>
       <span>koini<span class="ml-2 text-xs font-normal tracking-normal md:text-sm">studio</span></span>
     </a>
-    <nav aria-label="Main navigation" class="hidden items-center gap-5 text-xs md:flex xl:gap-8 xl:text-sm [&_a:hover]:text-[#a76141]">
-      <a href="#explore">The app</a><a href="#lab">From the lab</a><a href="#sharing">Room sharing</a>
+    <nav aria-label="Main navigation" data-section-tabs class="order-last -mx-2 mt-2 flex w-[calc(100%+16px)] items-center justify-between gap-1 pb-2 text-xs md:order-none md:mx-0 md:mt-0 md:w-auto md:justify-start md:gap-2 md:pb-0 xl:gap-4 xl:text-sm">
+      <a href="#explore" class="rounded-full px-3 py-2 whitespace-nowrap transition-colors hover:text-[#a76141] aria-[current=true]:bg-[#2d5040]/10 aria-[current=true]:text-[#243c32] motion-reduce:transition-none">The app</a><a href="#lab" class="rounded-full px-3 py-2 whitespace-nowrap transition-colors hover:text-[#a76141] aria-[current=true]:bg-[#2d5040]/10 aria-[current=true]:text-[#243c32] motion-reduce:transition-none">From the lab</a><a href="#sharing" class="rounded-full px-3 py-2 whitespace-nowrap transition-colors hover:text-[#a76141] aria-[current=true]:bg-[#2d5040]/10 aria-[current=true]:text-[#243c32] motion-reduce:transition-none">Room sharing</a>
     </nav>
     <a href="/auth/signin" data-account-link class="inline-flex cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#2d5040] px-3 py-2 text-[11px] font-medium text-white transition hover:-translate-y-0.5 hover:bg-[#203d30] motion-reduce:transform-none motion-reduce:transition-none md:gap-6 md:px-5 md:py-3 md:text-sm">Sign in</a>
   </header>
+  </div>
   <main id="main">
     <section class="grid items-center gap-9 pt-7 pb-11 md:grid-cols-[minmax(0,.85fr)_minmax(0,1.15fr)] md:gap-8 md:pt-8 md:pb-[75px] xl:grid-cols-[minmax(0,.9fr)_minmax(0,1.12fr)] xl:gap-[54px] mx-auto w-[calc(100%-40px)] max-w-[1320px] md:w-[calc(100%-60px)] xl:w-[calc(100%-96px)]" aria-labelledby="hero-heading">
       <div class="text-center md:text-left [&>p]:justify-center md:[&>p]:justify-start">

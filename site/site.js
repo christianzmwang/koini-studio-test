@@ -6,6 +6,30 @@ fetch('/auth/session', { cache: 'no-store' }).then(response => response.ok ? res
   }
 }).catch(() => {});
 
+const sectionTabs = [...document.querySelectorAll('[data-section-tabs] a[href^="#"]')]
+  .map(tab => ({ tab, section: document.getElementById(tab.hash.slice(1)) }))
+  .filter(({ section }) => section);
+if (sectionTabs.length) {
+  const header = document.querySelector('[data-site-header]');
+  let frame = 0;
+  const markCurrent = () => {
+    frame = 0;
+    const line = (header?.offsetHeight ?? 0) + window.innerHeight * 0.25;
+    let current = null;
+    for (const entry of sectionTabs) if (entry.section.getBoundingClientRect().top <= line) current = entry;
+    if (current && current.section.getBoundingClientRect().bottom <= (header?.offsetHeight ?? 0)) current = null;
+    for (const { tab } of sectionTabs) {
+      if (tab === current?.tab) tab.setAttribute('aria-current', 'true');
+      else tab.removeAttribute('aria-current');
+    }
+  };
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(markCurrent); };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('hashchange', schedule);
+  markCurrent();
+}
+
 const finishNames = { oak: 'oak', lightOak: 'light oak', herringbone: 'herringbone' };
 for (const card of document.querySelectorAll('[data-room-card]')) {
   const buttons = card.querySelectorAll('[data-floor]');

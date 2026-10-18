@@ -19,6 +19,18 @@ test('the built page references existing images, styles, scripts and 3D models',
   assert.doesNotMatch(html, /<!-- GALLERY -->|data-angle|styles\.css/);
 });
 
+test('"Explore in 3D" buttons lazily mount the real Three.js viewer instead of a placeholder', async () => {
+  const site = await readFile('site/site.js', 'utf8');
+  assert.match(site, /import\(['"]\.\/viewer\.js['"]\)/, 'site.js must load the viewer module on demand');
+  assert.match(site, /mountViewer\(host\)/, 'the [data-start] handler must mount the viewer in its card');
+  assert.doesNotMatch(site, /Rate is too much/);
+  const viewer = await readFile('site/viewer.js', 'utf8');
+  assert.match(viewer, /export async function mountViewer\(host\)/);
+  assert.match(viewer, /new OrbitControls\(/);
+  const html = await readFile('dist/index.html', 'utf8');
+  assert.equal((html.match(/data-start/g) ?? []).length, 5, 'every viewer card keeps its Explore in 3D button');
+});
+
 test('each furniture viewer ships a real, self-contained glTF model', async () => {
   const files = new Set([...gallery.map(model => `/assets/models/${model.id}.glb`), ...featuredRoom.items.map(item => item.model).filter(Boolean)]);
   for (const file of files) {

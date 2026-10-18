@@ -27,8 +27,28 @@ for (const host of document.querySelectorAll('[data-viewer]')) {
   const status = document.createElement('p');
   status.className = 'absolute inset-x-4 top-3 z-10 rounded-md bg-[#f6f6f0]/95 px-3 py-2 text-center text-xs text-[#354d3b]';
   status.setAttribute('role', 'status'); status.hidden = true; host.append(status);
-  start.addEventListener('click', () => {
-    status.textContent = 'Rate is too much';
-    status.hidden = false;
+  let cleanup = null;
+  let loading = false;
+  const showError = message => {
+    cleanup = null;
+    host.querySelector('[data-poster]')?.classList.remove('hidden');
+    start.hidden = false; start.disabled = false;
+    status.textContent = message; status.hidden = false;
+  };
+  host.addEventListener('viewer-error', event => showError(event.detail?.message || 'The 3D view could not load. Please try again.'));
+  start.addEventListener('click', async () => {
+    if (loading || cleanup) return;
+    loading = true; start.disabled = true; start.setAttribute('aria-busy', 'true');
+    status.textContent = 'Loading 3D view…'; status.hidden = false;
+    try {
+      const { mountViewer } = await import('./viewer.js');
+      cleanup = await mountViewer(host);
+      start.hidden = true; status.hidden = true; status.textContent = '';
+    } catch (error) {
+      console.warn('3D viewer unavailable', error);
+      showError('The 3D view could not load. Please try again.');
+    } finally {
+      loading = false; start.removeAttribute('aria-busy');
+    }
   });
 }

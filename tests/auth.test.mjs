@@ -34,6 +34,16 @@ test('sign-in issues a signed short-lived nonce and secure host-only cookie', as
   assert.match(await response.text(), new RegExp(`data-nonce="${transaction.nonce}"`));
 });
 
+test('the sign-in page renders a self-contained Continue with Google button, not a raw Google widget', async () => {
+  const response = await GET(request('signin'));
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /id="continue-with-google"/);
+  assert.match(html, />Continue with Google</);
+  assert.match(html, /class="google-g"/);
+  assert.doesNotMatch(html, /Continue with GoogleContinue with Google/);
+});
+
 test('session signing rejects tampering, expiry, wrong purpose, origin and secret', async () => {
   const token = await sign({ sub: 'google-id', email: 'person@example.com' }, 'session', 60);
   assert.equal((await verify(token, 'session')).sub, 'google-id');

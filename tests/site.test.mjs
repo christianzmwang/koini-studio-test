@@ -73,3 +73,18 @@ test('the homepage features the selected saved room and keeps private room expor
   await assert.rejects(access('dist/.local'));
   await assert.rejects(access('dist/rooms.json'));
 });
+
+test('"Explore in 3D" buttons lazily mount the real Three.js viewer instead of a placeholder', async () => {
+  const site = await readFile('site/site.js', 'utf8');
+  const viewer = await readFile('site/viewer.js', 'utf8');
+  assert.match(viewer, /export async function mountViewer\(host\)/);
+  assert.match(site, /import\(['"]\.\/viewer\.js['"]\)/, 'site.js must load the viewer module on demand');
+  assert.match(site, /mountViewer\(host\)/, 'each [data-start] button must mount the viewer in its own host');
+  assert.doesNotMatch(site, /Rate is too much/);
+  const html = await readFile('dist/index.html', 'utf8');
+  const script = html.match(/<script type="module"[^>]*src="(\/assets\/[^"]+\.js)"/);
+  assert.ok(script, 'the built page loads a bundled module script');
+  const entry = await readFile('dist' + script[1], 'utf8');
+  assert.doesNotMatch(entry, /Rate is too much/);
+  assert.match(entry, /import\(/, 'the built entry keeps the viewer as a lazily loaded chunk');
+});

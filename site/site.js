@@ -27,8 +27,23 @@ for (const host of document.querySelectorAll('[data-viewer]')) {
   const status = document.createElement('p');
   status.className = 'absolute inset-x-4 top-3 z-10 rounded-md bg-[#f6f6f0]/95 px-3 py-2 text-center text-xs text-[#354d3b]';
   status.setAttribute('role', 'status'); status.hidden = true; host.append(status);
-  start.addEventListener('click', () => {
-    status.textContent = 'Rate is too much';
-    status.hidden = false;
+  const label = start.textContent;
+  const reset = message => {
+    host.querySelector('[data-poster]')?.classList.remove('hidden');
+    start.disabled = false; start.textContent = label; start.hidden = false;
+    status.textContent = message; status.hidden = false;
+  };
+  host.addEventListener('viewer-error', event => reset(event.detail?.message || 'The 3D view could not be loaded. Please try again.'));
+  start.addEventListener('click', async () => {
+    if (start.disabled) return;
+    start.disabled = true; start.textContent = 'Loading 3D…'; status.hidden = true;
+    try {
+      const { mountViewer } = await import('./viewer.js');
+      await mountViewer(host);
+      start.hidden = true;
+    } catch (error) {
+      console.warn('3D viewer failed to load', error);
+      reset('The 3D view could not be loaded. Please try again.');
+    }
   });
 }

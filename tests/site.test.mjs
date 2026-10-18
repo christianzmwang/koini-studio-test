@@ -54,6 +54,7 @@ test('only the room landing page is forwarded, with no snapshot write API or adm
   assert.ok(room);
   assert.equal(room.source, '/room-copy/:token([0-9a-f]{32})');
   assert.equal(room.destination, '/api/room-copy?token=:token');
+  assert.ok(config.redirects.some(route => route.source === '/sign-in' && route.destination === '/auth/signin'), 'the /sign-in entry path must redirect to the canonical sign-in route');
   assert.ok(config.rewrites.every(route => !route.source.includes('admin') && !route.source.includes('room-copies')));
   assert.ok(config.headers.some(route => route.source === '/room-copy/:path*' && route.headers.some(header => header.key === 'Cache-Control' && header.value === 'no-store')));
 });

@@ -6,6 +6,9 @@ export const config = {
   outputDirectory: 'dist',
   framework: null,
   cleanUrls: true,
+  redirects: [
+    routes.redirect('/sign-in', '/auth/signin', { statusCode: 307 }),
+  ],
   rewrites: [
     routes.rewrite('/auth/:action(signin|callback|session|account|signout)', '/api/auth?action=:action'),
     routes.rewrite('/room-copy/:token([0-9a-f]{32})', '/api/room-copy?token=:token'),
